@@ -1,0 +1,10 @@
+#################################### SQLITE #############################################
+SelectTree = "SELECT * from zandy_tree ORDER BY id"
+SelectCoordinate = "SELECT coordinate from zandy_tree"
+InsertTree = "INSERT INTO zandy_tree (name,coordinate,posisi) VALUES (?,?,?)"
+SelectIndexCoordinate = "SELECT posisi from zandy_tree ORDER BY posisi DESC limit 1"
+InsertSensor = "INSERT INTO zandy_sensor (id_tree,suhu_udara,kelembaban_udara,curah_hujan,uv,suhu_tanah,kelembaban_tanah,ph,kadar_n,kadar_p,kadar_k,date,time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
+SelectSensorById = "SELECT * from zandy_sensor where id_tree=? and date=? ORDER BY date ASC, time ASC"
+AverageSensor = "SELECT AVG(suhu_udara) as avg_suhu_udara,AVG(kelembaban_udara) as avg_kelembaban_udara,AVG(curah_hujan) as avg_curah_hujan,AVG(uv) as avg_uv,AVG(suhu_tanah) as avg_suhu_tanah,AVG(kelembaban_tanah) as avg_kelembaban_tanah,AVG(ph) as avg_ph,AVG(kadar_n) as avg_kadar_n,AVG(kadar_p) as avg_kadar_p,AVG(kadar_k) as avg_kadar_k from zandy_sensor where date=? ORDER BY date ASC, time ASC"
+SelectDistinct = "SELECT DISTINCT date FROM zandy_sensor;"
+DeleteTree = "DELETE FROM zandy_tree WHERE id=?"

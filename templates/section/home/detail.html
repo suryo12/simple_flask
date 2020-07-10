@@ -1,0 +1,89 @@
+
+{% extends "base/default_mobile.html" %}
+{% block content %}
+<!-- line_chart_kwh({{kwh_list | safe}}, {{kwh_time | safe}}); -->
+    
+              <!-- Content Row -->
+              <div class="row">
+    
+                <div class="col-lg-12 mb-0 py-3">
+                  <div class="card shadow">
+                    <div class="card-header py-3">
+                      <h5 class="m-0 font-weight-bold text-primary">Detail average of all sensor in every tree</h5>
+                  </div>
+                  <div class="card-body">
+                    <label class="text-primary">Sensor Suhu Udara</label>
+                    <hr>
+                    <div class="chart-area">
+                    <canvas id="suhu_udara"></canvas>
+                    </div>
+                    <label class="text-primary">Sensor Kelembaban Udara</label>
+                    <hr>
+                    <div class="chart-area">
+                    <canvas id="kelembaban_udara"></canvas>
+                    </div>
+                    <label class="text-primary">Sensor Curah Hujan</label>
+                    <hr>
+                    <div class="chart-area">
+                    <canvas id="curah_hujan"></canvas>
+                    </div>
+                    <label class="text-primary">Sensor Uv</label>
+                    <hr>
+                    <div class="chart-area">
+                    <canvas id="uv"></canvas>
+                    </div>
+                    <label class="text-primary">Sensor Suhu Tanah</label>
+                    <hr>
+                    <div class="chart-area">
+                    <canvas id="suhu_tanah"></canvas>
+                    </div>
+                    <label class="text-primary">Sensor Kelembaban Tanah</label>
+                    <hr>
+                    <div class="chart-area">
+                    <canvas id="kelembaban_tanah"></canvas>
+                    </div>
+                    <label class="text-primary">Sensor Ph</label>
+                    <hr>
+                    <div class="chart-area">
+                    <canvas id="ph"></canvas>
+                    </div>
+                    <label class="text-primary">Sensor Kadar N</label>
+                    <hr>
+                    <div class="chart-area">
+                    <canvas id="kadar_n"></canvas>
+                    </div>
+                    <label class="text-primary">Sensor Kadar P</label>
+                    <hr>
+                    <div class="chart-area">
+                    <canvas id="kadar_p"></canvas>
+                    </div>
+                    <label class="text-primary">Sensor Kadar K</label>
+                    <hr>
+                    <div class="chart-area">
+                    <canvas id="kadar_k"></canvas>
+                    </div>
+                        
+                </div>
+                </div>
+              </div>
+
+              </div>
+{% endblock %}         
+{% block library_bottom %}
+<!-- Page level plugins -->
+<script src="{{ url_for('static', filename='admin/vendor/chart.js/Chart.min.js') }}"></script>
+<!-- Page level custom scripts -->
+<script src="{{ url_for('static', filename='admin/js/demo/chart-area-demo.js') }}"></script>
+<script>
+    suhu_udara({{suhu_udara | safe}},{{time | safe}})
+    kelembaban_udara({{kelembaban_udara | safe}},{{time | safe}})
+    curah_hujan({{curah_hujan | safe}},{{time | safe}})
+    uv({{uv | safe}},{{time | safe}})
+    suhu_tanah({{suhu_tanah | safe}},{{time | safe}})
+    kelembaban_tanah({{kelembaban_tanah | safe}},{{time | safe}})
+    ph({{ph | safe}},{{time | safe}})
+    kadar_n({{kadar_n | safe}},{{time | safe}})
+    kadar_p({{kadar_p | safe}},{{time | safe}})
+    kadar_k({{kadar_k | safe}},{{time | safe}})
+</script>
+{% endblock %}

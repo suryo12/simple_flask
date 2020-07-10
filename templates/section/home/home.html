@@ -1,0 +1,134 @@
+{% extends "base/default_mobile.html" %}
+{% block content %}
+    
+              <!-- Content Row -->
+              <div class="row">
+                    
+                <div class="col-lg-12 mb-0 py-3">
+                    <a class="d-none d-sm-inline-block btn btn-block btn-primary shadow-sm text-white" data-toggle="modal" data-target="#addNode"><i class="fas fa-tree fa-sm text-white-50"></i> Add New Tree</a>
+                    <hr>
+                    <a class="d-none d-sm-inline-block btn btn-block btn-success shadow-sm text-white" onclick="window.location.href='{{url_for('average')}}'"><i class="fas fa-percentage fa-sm text-white-50"></i> Average Data</a>
+                    <hr>
+                    {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for message in messages %} {% if "Scs" in message[1]: %}
+                <div class="form-control form-control-user alert alert-success text-md font-weight-bold text-black text-capitalize mb-1" style="font-size: 15px;margin-top: 10px; text-align: center">
+                    {{ message[0] }}
+                </div>
+                <hr> {% endif %} {% if "Err" in message[1]: %}
+                <div class="form-control form-control-user alert alert-danger text-md font-weight-bold text-black text-capitalize mb-1" style="font-size: 15px;margin-top: 10px; text-align: center">
+                    {{ message[0] }}
+                </div>
+                <hr> {% endif %} {% endfor %} {% endif %} {% endwith %}
+                  <div class="card shadow">
+                    <div class="card-header py-3">
+                        <h5 class="m-0 font-weight-bold text-primary">Home</h5>
+                    </div>
+                  <div class="card-body">
+                    {% if tree | length == 0 %}
+                    <table class="table" width="100%" cellspacing="0">
+          
+                        <tbody>
+                            <tr>
+                                <td class="text-lg font-weight-bold text-black text-capitalize mb-1" style="text-align: center;">There is not data for tree, please add new tree<hr></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <table class="table table-bordered" id="dataTable" width="100%" >
+                        <thead>
+                          <tr style="text-align: center;">
+                            <th>Name of Tree</th>
+                            <th>Coordinate</th>
+                            <th>Action</th>                            
+                          </tr>
+                        </thead>
+                        <tfoot>
+                            <tr style="text-align: center;">
+                                <th>Name of Tree</th>
+                                <th>Coordinate</th>
+                                <th>Action</th>
+                            </tr>
+                          </tfoot>
+                          <tbody>
+                              {% for i in tree%}
+                              <tr style="text-align: center;">
+                                <td>{{i["name"]}}</td>
+                                <td>{{i["coordinate"]}}</td>
+                                
+                                <td align="center" style="color: white">
+                                    <a class="btn btn-info btn-circle btn-lg" onclick="window.location.href='{{url_for('detail',id=i['id'],name=i['name'])}}'">
+                                      <span class="fas fa-tv"></span></a>
+                                    <a class="btn btn-danger btn-circle btn-lg" data-target="#deleteModal{{i['id']}}" data-toggle="modal">
+                                        <span class="fas fa-trash"></span></a>
+                                  </td>
+                              </tr>
+                              {% endfor %}
+                          </tbody>
+
+                      </table>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+
+              </div>
+
+<!-- addNode Modal-->
+<div class="modal fade mt-5 py-5" id="addNode" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add new tree</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+            </div>
+            <div class="modal-body">
+                <form id="modalform" method="POST" enctype="multipart/form-data">
+                    <table class="table" width="100%" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td style="width: 25%;"><label for="nama">Tree name</label></td>
+                                <td><input required class="form-control form-control-user" type="text" name="nama" id="nama"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- deletNode Modal-->
+{% for i in tree%}
+<div class="modal fade mt-5 py-5" id="deleteModal{{i['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete tree</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+            </div>
+            <div class="modal-body">
+                <form id="modalform" method="POST" enctype="application/x-www-form-urlencoded" action="{{url_for('delete',id=i['id'])}}">
+                    <h5>Are you sure to delete <b style="color: red;"><u>{{i["name"]}}</u></b> tree ?</h5>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Yes</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}          
